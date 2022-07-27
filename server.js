@@ -9,11 +9,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-// handlebars template
+// handlebars template engine
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // middlewares
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

@@ -1,10 +1,7 @@
 const router = require('express').Router();
+const apiController = require('./apiController');
 const {User} = require('../models');
 
-const todos = [
-    'clean tha apt',
-    'eat lunch',
-];
 
 router.get('/', (req,res) => {
     res.render('landingPage');
@@ -22,5 +19,8 @@ router.get('/users', async (req, res) => {
         res.status(500).json({error});
     }
 });
+
+
+router.use('/api', apiController);
 
 module.exports = router;
