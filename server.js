@@ -3,7 +3,11 @@ const exphbs = require('express-handlebars');
 const sequelize = require('./config/connection');
 const routes = require('./controllers/homepageController');
 
-const hbs = exphbs.create({});
+const helpers = require('./utils/helpers');
+
+const hbs = exphbs.create({
+    helpers,
+});
 
 const app = express();
 
