@@ -1,10 +1,6 @@
 <h1>All the users</h1>
 <ul>
     {{#each users}}
-        <li>
-            <p>Id: {{ id }}</p>
-            <p>Username: {{ username }}</p>
-            <p>Password: {{ password }}</p>
-        </li>
+        {{>userList}}
     {{/each}}
 </ul>

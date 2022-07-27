@@ -20,6 +20,17 @@ router.get('/users', async (req, res) => {
     }
 });
 
+router.get('/users/:userId', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.params.userId);
+        const user = userData.get({plain: true});
+
+        res.render('userProfile', {user});
+    } catch (error) {
+        res.status(500).json({error});
+    }
+});
+
 
 router.use('/api', apiController);
 
