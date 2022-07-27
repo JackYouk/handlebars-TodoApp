@@ -13,7 +13,11 @@ router.get('/users', async (req, res) => {
         const dbUsersData = await User.findAll();
         const users = dbUsersData.map(dbUser => dbUser.get({plain: true}));
         console.log(users);
-        res.render('users', { users });
+        res.render('users', {
+            users,
+            loggedInUser: req.session.user || null,
+            isLoggedIn: req.session.isLoggedIn,
+        });
     } catch (error) {
         console.log('Err L:25 homepageController', error);
         res.status(500).json({error});
