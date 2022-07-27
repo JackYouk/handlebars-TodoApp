@@ -7,10 +7,7 @@ const todos = [
 ];
 
 router.get('/', (req,res) => {
-    res.render('todos', {
-        todos,
-        favFood: 'hamburgesa',
-    });
+    res.render('landingPage');
 });
 
 // HTML routes and API routes
