@@ -5,12 +5,15 @@ const expsesh = require('express-session');
 const sequelize = require('./config/connection');
 const routes = require('./controllers/homepageController');
 
+// handlebars helpers
 const helpers = require('./utils/helpers');
 
+// handlebars init
 const hbs = exphbs.create({
     helpers,
 });
 
+// express session settings
 const sessionSettings = {
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -35,7 +38,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(routes);
 
-
+// server listener + sequelize sync
 sequelize.sync({force: false}).then(() => {
     app.listen(PORT, () => console.log('server up'));
 });
