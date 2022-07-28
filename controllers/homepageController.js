@@ -2,15 +2,16 @@ const router = require('express').Router();
 const apiController = require('./apiController');
 const {User} = require('../models');
 
-
+// renders signup/landing page
 router.get('/', (req,res) => {
     res.render('landingPage');
 });
 
-// HTML routes and API routes
+// renders users page using user database data
 router.get('/users', async (req, res) => {
     try {
         const dbUsersData = await User.findAll();
+        // map db data to plain json
         const users = dbUsersData.map(dbUser => dbUser.get({plain: true}));
         console.log(users);
         res.render('users', {
@@ -24,6 +25,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
+// renders user profile page given a user id
 router.get('/users/:userId', async (req, res) => {
     try {
         const userData = await User.findByPk(req.params.userId);
@@ -35,7 +37,7 @@ router.get('/users/:userId', async (req, res) => {
     }
 });
 
-
+// sends routes w/ /api to apiController.js file
 router.use('/api', apiController);
 
 module.exports = router;

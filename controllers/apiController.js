@@ -3,11 +3,14 @@ const {User} = require('../models');
 
 // /api prepended
 
+// post signup data to database
 router.post('/signup', async (req, res) => {
     try {
-        // { username: '', password: ''}
+        // adds signup data to database
+        // post data: { username: '', password: ''}
         const newUser = await User.create(req.body);
 
+        // saves user session with new user data
         req.session.save(() => {
             req.session.user = newUser;
             req.session.isLoggedIn = true;
