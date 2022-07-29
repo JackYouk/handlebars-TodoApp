@@ -37,6 +37,10 @@ router.get('/users/:userId', async (req, res) => {
     }
 });
 
+router.get('/todos', (req, res) => {
+    res.render('todos');
+})
+
 // sends routes w/ /api to apiController.js file
 router.use('/api', apiController);
 

@@ -4,7 +4,9 @@ const sequelize = require('../config/connection');
 
 const seeder = async () => {
     await sequelize.sync({force: true});
-    await User.bulkCreate(users);
+    await User.bulkCreate(users, {
+        individualHooks: true,
+    });
     process.exit(0);
 };
 
