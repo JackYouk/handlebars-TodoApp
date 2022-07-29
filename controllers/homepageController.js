@@ -5,7 +5,15 @@ const {Todo} = require('../models');
 
 // renders signup/landing page
 router.get('/', (req,res) => {
-    res.render('landingPage');
+    res.render('landingPage', {
+        isLoggedIn: req.session.isLoggedIn,
+    });
+});
+
+router.get('/signin', (req,res) => {
+    res.render('signin', {
+        isLoggedIn: req.session.isLoggedIn,
+    });
 });
 
 // renders users page using user database data
@@ -54,6 +62,7 @@ router.get('/todos', async (req, res) => {
 
         res.render('todos', {
             todos,
+            isLoggedIn: req.session.isLoggedIn,
         });
     } catch (error) {
         res.status(500).json({error});
