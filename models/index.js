@@ -6,7 +6,7 @@ Todo.belongsTo(User, {
 });
 
 User.hasMany(Todo, {
-    foreignKey: 'id',
+    foreignKey: 'userId',
     onDelete: 'CASCADE',
 });
 
