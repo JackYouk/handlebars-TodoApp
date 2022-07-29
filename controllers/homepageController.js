@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const apiController = require('./apiController');
 const {User} = require('../models');
+const {Todo} = require('../models');
 
 // renders signup/landing page
 router.get('/', (req,res) => {
@@ -37,12 +38,27 @@ router.get('/users/:userId', async (req, res) => {
     }
 });
 
-router.get('/todos', (req, res) => {
+router.get('/todos', async (req, res) => {
     if(!req.session.isLoggedIn){
         return res.redirect('/');
     }
-    res.render('todos');
-})
+
+    try {
+        const userTodosData = await Todo.findAll({
+            where: {
+                userId: req.session.user.id,
+            },
+        });
+
+        const todos = userTodosData.map(todo => todo.get({plain: true}));
+
+        res.render('todos', {
+            todos,
+        });
+    } catch (error) {
+        res.status(500).json({error});
+    }
+});
 
 // sends routes w/ /api to apiController.js file
 router.use('/api', apiController);

@@ -1,8 +1,27 @@
 const router = require('express').Router();
-const {User} = require('../models');
+const {Todo, User} = require('../models');
 const bcrypt = require('bcryptjs');
 
 // /api prepended
+
+
+router.post('/todos', async (req, res) => {
+    if(!req.session.isLoggedIn){
+        res.status(401).json({error: 'You must be logged in to do that'});
+    }
+
+    try {
+        const newTodo = await Todo.create({
+            todo: req.body.todo,
+            userId: req.session.user.id,
+        });
+
+        res.json(newTodo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error});
+    }
+});
 
 // post signup data to database
 router.post('/signup', async (req, res) => {
