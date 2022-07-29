@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {User} = require('../models');
+const bcrypt = require('bcryptjs');
 
 // /api prepended
 
@@ -19,6 +20,44 @@ router.post('/signup', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({error});
+    }
+});
+
+router.post('/signin', async (req, res) => {
+    try {
+        const existingUser = await User.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+
+        if(!existingUser) {
+            return res.status(401).json({error: 'invalid credentials'});
+        }
+
+        const passwordMatch = await bcrypt.compare(req.body.password, existingUser.password);
+
+        if(!passwordMatch){
+            return res.status(401).json({error: 'invalid credentials'});
+        }
+
+        req.session.save(() => {
+            req.session.user = existingUser;
+            req.session.isLoggedIn = true;
+            res.json({success: true});
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error});
+    }
+});
+
+router.post('/signout', async (req, res) => {
+    if(req.session.isLoggedIn){
+        req.session.destroy(() => {
+            res.json({success: true});
+        });
     }
 });
 

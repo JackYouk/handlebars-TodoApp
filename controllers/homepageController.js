@@ -38,6 +38,9 @@ router.get('/users/:userId', async (req, res) => {
 });
 
 router.get('/todos', (req, res) => {
+    if(!req.session.isLoggedIn){
+        return res.redirect('/');
+    }
     res.render('todos');
 })
 
