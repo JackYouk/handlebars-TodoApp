@@ -18,7 +18,7 @@ signoutBtn?.addEventListener('click', async () => {
 });
 
 
-signUpBtn.addEventListener('click', async (event) => {
+signUpBtn?.addEventListener('click', async (event) => {
     event.preventDefault();
     const username = usernameInput.value;
     const password = passwordInput.value;

@@ -2,7 +2,7 @@ const signinBtn = document.getElementById('signinBtn');
 const signinUsernameInput = document.getElementById('signinUsernameInput');
 const signinPasswordInput = document.getElementById('signinPasswordInput');
 
-signinBtn.addEventListener('click', async (event) => {
+signinBtn?.addEventListener('click', async (event) => {
     event.preventDefault();
     const username = signinUsernameInput.value;
     const password = signinPasswordInput.value;
